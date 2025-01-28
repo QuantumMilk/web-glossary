@@ -4,17 +4,17 @@ FROM python:3.9-slim
 # Создадим рабочую директорию
 WORKDIR /app
 
-# Скопируем файлы зависимостей
-COPY requirements.txt requirements.txt
+# Скопируем файл зависимостей
+COPY requirements.txt .
 
 # Установим зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Скопируем все файлы в контейнер
-COPY . .
+# Скопируем код бэкенда
+COPY . /app
 
-# Укажем порт, на котором запускается приложение
+# Откроем порт 8080
 EXPOSE 8080
 
-# Запуск uvicorn на 8080
+# Запуск приложения
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]

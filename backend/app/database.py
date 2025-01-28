@@ -5,7 +5,6 @@ from .config import SQLALCHEMY_DATABASE_URL
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False},  # нужно для SQLite при однопоточном режиме
+    connect_args={"check_same_thread": False},  # для SQLite
 )
-
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
