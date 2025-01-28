@@ -1,10 +1,7 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 
-
-# ----------------
-# CRUD для Term
-# ----------------
+# ---------- CRUD для Term ----------
 
 def create_term(db: Session, term: schemas.TermCreate):
     db_term = models.Term(
@@ -33,7 +30,6 @@ def update_term(db: Session, term_db: models.Term, updates: schemas.TermUpdate):
         term_db.definition = updates.definition
     if updates.source is not None:
         term_db.source = updates.source
-
     db.commit()
     db.refresh(term_db)
     return term_db
@@ -42,9 +38,7 @@ def delete_term(db: Session, term_db: models.Term):
     db.delete(term_db)
     db.commit()
 
-# ----------------
-# CRUD для Relationship
-# ----------------
+# ---------- CRUD для Relationship ----------
 
 def create_relationship(db: Session, rel: schemas.RelationshipCreate):
     db_rel = models.Relationship(
@@ -67,7 +61,6 @@ def update_relationship(db: Session, rel_db: models.Relationship, rel_data: sche
     rel_db.source_term_id = rel_data.source_term_id
     rel_db.target_term_id = rel_data.target_term_id
     rel_db.relation_type = rel_data.relation_type
-
     db.commit()
     db.refresh(rel_db)
     return rel_db

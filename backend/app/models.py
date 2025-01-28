@@ -11,7 +11,6 @@ class Term(Base):
     definition = Column(String, nullable=False)
     source = Column(String, nullable=True)
 
-    # Связи
     outgoing_relationships = relationship(
         "Relationship",
         foreign_keys="Relationship.source_term_id",
@@ -25,14 +24,14 @@ class Term(Base):
         back_populates="target_term",
     )
 
+
 class Relationship(Base):
     __tablename__ = "relationships"
 
     id = Column(Integer, primary_key=True, index=True)
     source_term_id = Column(Integer, ForeignKey("terms.id"), nullable=False)
     target_term_id = Column(Integer, ForeignKey("terms.id"), nullable=False)
-    relation_type = Column(String, nullable=True)  # напр. "depends_on", "part_of" и т.п.
+    relation_type = Column(String, nullable=True)
 
-    # Двусторонние связи
     source_term = relationship("Term", foreign_keys=[source_term_id], back_populates="outgoing_relationships")
     target_term = relationship("Term", foreign_keys=[target_term_id], back_populates="incoming_relationships")

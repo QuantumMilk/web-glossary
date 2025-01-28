@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: glossary_backend
+    ports:
+      - "8080:8080"
+    environment:
+      - INIT_DB=True  # при первом запуске заполнить базу
+    volumes:
+      - ./backend/data/:/app/data/ # чтобы иметь доступ к initial_data.json с хоста
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: glossary_frontend
+    ports:
+      - "3000:80" # Nginx внутри контейнера слушает на 80, пробрасываем на 3000
+    restart: unless-stopped
